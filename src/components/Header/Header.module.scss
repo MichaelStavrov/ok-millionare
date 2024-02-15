@@ -1,0 +1,9 @@
+.header {
+  width: 100%;
+  padding: calc(var(--safe-area-inset-top) + 24px) 24px 14px;
+  background-color: aqua;
+
+  @media (max-width: 430px) {
+    padding: calc(var(--safe-area-inset-top) + 14px) 24px 14px;
+  }
+}

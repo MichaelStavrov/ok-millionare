@@ -1,0 +1,96 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "root": true,
+  "globals": {
+    "ok": "readonly",
+    "assets": "readonly",
+    "styles": "readonly",
+    "services": "readonly",
+    "utils": "readonly",
+    "store": "readonly",
+    "bem-cn-custom": "readonly",
+    "JSX": "readonly"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
+  "rules": {
+    // Включаем prettire
+    "prettier/prettier": "warn",
+    // Разрешаем не дефолтный экспорт
+    "import/prefer-default-export": 0,
+    // Разрешаем иморт расширений
+    "import/extensions": 0,
+    // не требуем использовать только camelCase в  названиях переменных
+    "camelcase": 0,
+    // разрешаем использовать любые конструкции
+    "no-restricted-syntax": 0,
+    // Разрешаем функции возвращать неконсистентные данные
+    "consistent-return": 0,
+    // Явно указываем, какие файлы могут использовать JSX
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ],
+    // Разрешаем использовать разные определния для компонентов
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    // Разрешаем применять spread к пропсам
+    "react/jsx-props-no-spreading": [
+      "error",
+      {
+        "html": "ignore",
+        "custom": "ignore",
+        "exceptions": [""]
+      }
+    ],
+    // Отключаем стандартную проверку неиспользуемых переменных
+    "no-unused-vars": 0,
+    // Включаем проверку неиспоьзуемых переменных плагином ts
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    // Отключаем стандартную проверку на уже объявленные переменные в скопе
+    "no-shadow": 0,
+    // Включаем проверку на уже объявленные переменные в скопе плагином ts
+    "@typescript-eslint/no-shadow": ["error"],
+    // Разрешаем создавать методы класса без использования в них this
+    "class-methods-use-this": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "prefer-const": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {},
+      "root": true
+    },
+    "root": true
+  }
+}
