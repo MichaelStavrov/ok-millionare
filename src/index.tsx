@@ -10,7 +10,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const version = packageJSON.version.replace(/\./g, '-');
 
 root.render(
-  <BrowserRouter basename={isProd ? `/static/pro-${packageJSON.name}/${version}/` : '/'}>
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 );
