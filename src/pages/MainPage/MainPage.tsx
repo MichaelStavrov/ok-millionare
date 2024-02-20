@@ -12,10 +12,10 @@ import styles from './MainPage.module.scss';
 const MainPage = () => {
   const { questions, getQuestions, getRating } = useAppState();
 
-  useEffect(() => {
-    getQuestions();
-    getRating();
-  }, [getQuestions, getRating]);
+  // useEffect(() => {
+  //   getQuestions();
+  //   getRating();
+  // }, [getQuestions, getRating]);
 
   return (
     <div className={styles.mainPage}>

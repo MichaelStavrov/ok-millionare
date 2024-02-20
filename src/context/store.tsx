@@ -99,8 +99,7 @@ const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
     try {
       setRatingFetchingStatus('loading');
       const data = await service.fetchRating();
-      const sortedData = data?.length ? data.sort((a, b) => b.score - a.score) : [];
-      setRatingData(sortedData);
+      setRatingData(data);
     } catch (err) {
       console.log('err', err);
       setRatingFetchingStatus('error');

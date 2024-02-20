@@ -10,7 +10,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const version = packageJSON.version.replace(/\./g, '-');
 
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename={isProd ? 'ok-millionare/' : '/'}>
     <App />
   </BrowserRouter>
 );

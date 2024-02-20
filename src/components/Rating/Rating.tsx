@@ -7,9 +7,11 @@ const Rating = () => {
 
   // if (!ratingData.length) return null;
 
+  const sortedData = rating?.length ? rating.sort((a, b) => b.score - a.score) : [];
+
   return (
     <ul className={styles.list}>
-      {rating.map(({ id, name, score }, index) => (
+      {sortedData.map(({ id, name, score }, index) => (
         <li
           style={index === 0 ? { backgroundColor: 'rgb(249, 191, 80)', color: 'black' } : {}}
           className={styles.item}
