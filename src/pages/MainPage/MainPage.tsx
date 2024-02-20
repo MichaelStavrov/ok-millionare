@@ -8,9 +8,10 @@ import { service } from 'src/api/service';
 // import { service } from 'src/api/service';
 import { useAppState } from 'src/context/store';
 import styles from './MainPage.module.scss';
+import { questions } from 'src/mocks';
 
 const MainPage = () => {
-  const { questions, getQuestions, getRating } = useAppState();
+  const { getQuestions, getRating } = useAppState();
 
   // useEffect(() => {
   //   getQuestions();
