@@ -7,9 +7,9 @@
   color: var(--white);
   background-color: var(--white);
   border-radius: 70px;
-  font-size: 28px;
+  font-size: 18px;
   line-height: var(--lh-20);
-  font-weight: 600;
+  // font-weight: 600;
   font-family: var(--OK_Sans_Display_DemiBold);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
@@ -20,11 +20,13 @@
 }
 
 .primary {
-  background-color: var(--primary);
+  // background-color: var(--secondary);
+  background: linear-gradient(#304a5d, #02111c);
 
   @media (hover: hover) {
     &:hover:enabled {
-      background-color: var(--primary-hover);
+      // background-color: var(--primary-hover);
+      background: linear-gradient(#4c6a80, #0c2c43);
     }
   }
 }

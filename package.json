@@ -1,7 +1,7 @@
 {
-  "name": "motivators",
-  "version": "0.0.6",
-  "description": "Создать мотиватор",
+  "name": "ok-millionaire",
+  "version": "0.0.1",
+  "description": "OK-Миллионер",
   "scripts": {
     "start": "npx webpack serve --config webpack.config.dev.js",
     "build": "npx webpack --config webpack.config.dev.js",
@@ -13,7 +13,9 @@
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "cross-env": "7.0.3",
+    "nanoid": "5.0.5",
     "react": "18.2.0",
+    "react-countdown-circle-timer": "3.2.1",
     "react-dom": "18.2.0",
     "react-router-dom": "6.7.0"
   },

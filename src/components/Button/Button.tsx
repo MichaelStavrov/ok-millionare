@@ -18,6 +18,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fw?: CSSProperties['fontWeight'];
   br?: CSSProperties['borderRadius'];
   ls?: CSSProperties['letterSpacing'];
+  style?: CSSProperties;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -35,6 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     size,
     br,
     ls,
+    style,
     ...rest
   } = props;
 
@@ -59,6 +61,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
         fontWeight: fw,
         borderRadius: br,
         letterSpacing: ls,
+        ...style,
       }}
     >
       {isLoading ? <Loader color={loaderColor} /> : children}

@@ -1,0 +1,16 @@
+.list {
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item {
+  padding: 4px 8px;
+  display: grid;
+  grid-template-columns: 1fr 0.5fr auto;
+  gap: 8px;
+  font-weight: 700;
+  border-radius: 6px;
+  // border-bottom: 1px solid white;
+}

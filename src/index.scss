@@ -1,8 +1,6 @@
 @import './styles//fonts.scss';
 
 :root {
-
-
   /* colors */
   --primary: #ff7700;
   --primary-hover: #d66400;
@@ -11,6 +9,10 @@
   --white: #ffffff;
   --background-secondary: #eff2f9;
   --border-color: #525252;
+  --danger: #ff5756;
+  --yellow: #ffb311;
+  --secondary: #505050;
+  --success: #1ebb55;
 
   /* font-size */
   --web-default: 18px;
@@ -31,10 +33,11 @@
 }
 
 body {
-  padding: 20px;
+  height: 100dvh;
   margin: 0 auto;
-  color: var(--black);
-  background-color: var(--white);
+  color: var(--white);
+  background-color: var(--black);
+  background: url('./assets/images/back-oktech.png');
   font-family: var(--OK_Sans_Display_Medium);
   font-size: var(--web-default);
   line-height: 120%;
@@ -86,4 +89,3 @@ button {
   -webkit-font-smoothing: inherit;
   -moz-osx-font-smoothing: inherit;
 }
-

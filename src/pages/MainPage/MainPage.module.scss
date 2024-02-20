@@ -1,0 +1,26 @@
+.mainPage {
+  max-width: 1000px;
+  position: relative;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.topContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 80px;
+}
+
+.centerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer {
+  margin-bottom: 40px;
+}
