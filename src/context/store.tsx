@@ -1,10 +1,10 @@
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from 'react';
 import { service } from 'src/api/service';
-import { Answer, FetchingStatus, GameResult, Helpers, Question, Rating } from 'src/types';
+import { Answer, FetchingStatus, GameResult, Helpers, Question } from 'src/types';
 
 interface AppState {
   questions: Question[];
-  getQuestions: () => void;
+  getQuestions: (data: string[]) => void;
   questionFetchingStatus: FetchingStatus;
   currentQuestionNum: number;
   nextQuestion: () => void;
@@ -26,9 +26,6 @@ interface AppState {
   incTimerKey: () => void;
   helpers: Helpers;
   onChangeHelpers: (helpers: Helpers) => void;
-  ratingData: Rating[];
-  getRating: () => void;
-  ratingFetchingStatus: FetchingStatus;
 }
 
 const initialState: AppState = {
@@ -58,9 +55,6 @@ const initialState: AppState = {
     audience: 0,
   },
   onChangeHelpers: () => {},
-  ratingData: [],
-  getRating: () => {},
-  ratingFetchingStatus: 'idle',
 };
 
 const MyContext = createContext(initialState);
@@ -69,42 +63,27 @@ const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [questionFetchingStatus, setQuestionFetchingStatus] = useState<FetchingStatus>('idle');
   const [currentQuestionNum, setCurrentQuestionNum] = useState(1);
-  const [playTimer, setPlayTimer] = useState(true);
-  const [safeAmount, setSafeAmount] = useState(0);
-  const [end, setEnd] = useState<GameResult>('none');
   const [userAnswer, setUserAnswer] = useState<Answer | null>(null);
+  const [playTimer, setPlayTimer] = useState(true);
   const [timerIsOver, setTimerIsOver] = useState(false);
   const [timerKey, setTimerKey] = useState(1);
+  const [safeAmount, setSafeAmount] = useState(0);
+  const [end, setEnd] = useState<GameResult>('none');
   const [helpers, setHelpers] = useState<Helpers>({
     half: 0,
     audience: 0,
   });
-  const [ratingData, setRatingData] = useState<Rating[]>([]);
-  const [ratingFetchingStatus, setRatingFetchingStatus] = useState<FetchingStatus>('idle');
 
-  const getQuestions = useCallback(async () => {
+  const getQuestions = useCallback(async (data: string[]) => {
     try {
       setQuestionFetchingStatus('loading');
-      const data = await service.fetchQuestions();
-      setQuestions(data);
+      const res = await service.fetchQuestions(data);
+      setQuestions(res);
     } catch (err) {
       console.log('err', err);
       setQuestionFetchingStatus('error');
     } finally {
       setQuestionFetchingStatus('loaded');
-    }
-  }, []);
-
-  const getRating = useCallback(async () => {
-    try {
-      setRatingFetchingStatus('loading');
-      const data = await service.fetchRating();
-      setRatingData(data);
-    } catch (err) {
-      console.log('err', err);
-      setRatingFetchingStatus('error');
-    } finally {
-      setRatingFetchingStatus('loaded');
     }
   }, []);
 
@@ -121,7 +100,7 @@ const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const onChangeHelpers = useCallback((help: Helpers) => setHelpers(help), []);
 
   const onReset = useCallback(() => {
-    getQuestions();
+    setQuestions([]);
     setCurrentQuestionNum(1);
     setPlayTimer(true);
     setSafeAmount(0);
@@ -132,7 +111,7 @@ const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
       half: 0,
       audience: 0,
     });
-  }, [getQuestions]);
+  }, []);
 
   const appState: AppState = {
     questions,
@@ -158,9 +137,6 @@ const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
     incTimerKey,
     helpers,
     onChangeHelpers,
-    ratingData,
-    getRating,
-    ratingFetchingStatus,
   };
 
   return <MyContext.Provider value={appState}>{children}</MyContext.Provider>;

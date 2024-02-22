@@ -108,14 +108,6 @@ module.exports = {
       favicon: false,
       template: './public/index.html',
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, 'src/assets/post'),
-    //       to: path.resolve(__dirname, 'build/post'),
-    //     },
-    //   ],
-    // }),
     new ForkTsCheckerWebpackPlugin({
       eslint: {
         enabled: true,

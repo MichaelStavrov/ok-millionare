@@ -1,5 +1,7 @@
 export type FetchingStatus = 'idle' | 'loading' | 'loaded' | 'ok' | 'error';
 
+export type SetStatus = (status: FetchingStatus) => void;
+
 export interface Answer {
   id: number;
   text: string;

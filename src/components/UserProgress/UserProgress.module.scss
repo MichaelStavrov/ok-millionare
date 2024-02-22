@@ -10,7 +10,7 @@
   display: grid;
   grid-template-columns: 1fr 0.5fr auto;
   gap: 8px;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   border-radius: 6px;
   // border-bottom: 1px solid white;
 }

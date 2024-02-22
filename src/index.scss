@@ -1,6 +1,9 @@
 @import './styles//fonts.scss';
 
 :root {
+  /* custom */
+  --question-container-width: 800px;
+
   /* colors */
   --primary: #ff7700;
   --primary-hover: #d66400;
@@ -16,6 +19,10 @@
 
   /* font-size */
   --web-default: 18px;
+  --fz-large: 24px;
+  --fz-timer-s: 60px;
+  --fz-timer-m: 70px;
+  --fz-timer-l: 80px;
 
   /* font-weight */
   --fw-bold: 600;
@@ -32,9 +39,14 @@
   box-sizing: border-box;
 }
 
+#root {
+  height: 100%;
+}
+
 body {
   height: 100dvh;
-  margin: 0 auto;
+  margin: 0;
+  // margin: 60px auto 0;
   color: var(--white);
   background-color: var(--black);
   background: url('./assets/images/back-oktech.png');
@@ -83,7 +95,7 @@ button {
   outline: none;
   cursor: pointer;
   font-family: var(--OK_Sans_Display_Medium);
-  font-size: var(--fz-20);
+  font-size: var(--web-default);
   font-weight: var(--fw-normal);
 
   -webkit-font-smoothing: inherit;

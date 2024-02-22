@@ -5,19 +5,13 @@ import styles from './QuestionComponent.module.scss';
 import { useAppState } from 'src/context/store';
 import Button from 'components/Button';
 import { getIncorrectQuestionIndexes } from 'utils/getIncorrectQuestionIndexes';
-import { questions } from 'src/mocks';
-
-const getSafeAmount = (num: number) => {
-  if (num <= 3) return 1;
-  if (num <= 6) return 3;
-  if (num <= 9) return 6;
-
-  return 9;
-};
+import { getSafeAmount } from 'utils/getSafeAmount';
+import { getBc } from 'utils/getBc';
+// import { questions } from 'src/mocks';
 
 const QuestionComponent: FC = () => {
   const {
-    // questions,
+    questions,
     nextQuestion,
     onPlayTimer,
     onPauseTimer,
@@ -33,9 +27,7 @@ const QuestionComponent: FC = () => {
     incTimerKey,
     helpers,
   } = useAppState();
-
-  const [timer, setTimer] = useState(0);
-
+  const [blinkTimer, setBlinkTimer] = useState(0);
   const BLINK_DURATION = 2;
 
   useEffect(() => {
@@ -64,9 +56,9 @@ const QuestionComponent: FC = () => {
 
     if (userAnswer) {
       interval = setInterval(() => {
-        setTimer((prev) => (prev += 1));
+        setBlinkTimer((prev) => (prev += 1));
       }, 1000);
-      if (timer >= BLINK_DURATION) {
+      if (blinkTimer >= BLINK_DURATION) {
         if (!userAnswer.correct) {
           const safeAmount = getSafeAmount(currentQuestionNum);
           onChangeSafeAmount(safeAmount);
@@ -78,7 +70,7 @@ const QuestionComponent: FC = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [timer, userAnswer, onChangeCurrentQuestionNum, currentQuestionNum, onChangeSafeAmount]);
+  }, [blinkTimer, userAnswer, onChangeCurrentQuestionNum, currentQuestionNum, onChangeSafeAmount]);
 
   const question = questions[currentQuestionNum - 1];
   const [halfIncorrectVariants, setHalfIncorrectVariants] = useState(() =>
@@ -96,24 +88,6 @@ const QuestionComponent: FC = () => {
     onSetUserAnswer(answer);
   };
 
-  const getBc = (id: number, correct: boolean) => {
-    if (userAnswer?.id === id && correct) {
-      return 'green';
-    }
-
-    if (userAnswer?.id === id && !correct) {
-      return 'var(--danger)';
-    }
-
-    if (userAnswer?.id !== id && correct) {
-      return 'var(--success)';
-    }
-
-    if (userAnswer?.id !== id && !correct) {
-      return 'linear-gradient(#304a5d, #02111c)';
-    }
-  };
-
   const onNext = () => {
     incTimerKey();
     if (end === 'none') {
@@ -123,31 +97,33 @@ const QuestionComponent: FC = () => {
     } else {
       onReset();
     }
-    setTimer(0);
+    setBlinkTimer(0);
   };
+
+  const showAnswerBackground = (userAnswer && blinkTimer === BLINK_DURATION) || timerIsOver;
+  const answerDisabled = blinkTimer === BLINK_DURATION || !!userAnswer || timerIsOver;
+  const getAnswerStyles = (id: number, index: number) => ({
+    [styles.animateAnswer]: userAnswer?.id === id,
+    [styles.nonHover]: blinkTimer === BLINK_DURATION || !!userAnswer,
+    [styles.hidden]:
+      helpers.half === currentQuestionNum &&
+      (index === halfIncorrectVariants.randomFirst || index === halfIncorrectVariants.randomSecond),
+  });
 
   return (
     <div className={styles.layout}>
-      <span className={styles.question}>{question.question}</span>
+      <span className={styles.question} dangerouslySetInnerHTML={{ __html: question.question }} />
       <div className={styles.answers}>
         {question.answers.map(({ id, text, correct }, index) => (
           <button
             type="button"
-            className={cn(styles.answer, {
-              [styles.animateAnswer]: userAnswer?.id === id,
-              [styles.nonHover]: timer === BLINK_DURATION || !!userAnswer,
-              [styles.hidden]:
-                helpers.half === currentQuestionNum &&
-                (index === halfIncorrectVariants.randomFirst ||
-                  index === halfIncorrectVariants.randomSecond),
-            })}
+            className={cn(styles.answer, getAnswerStyles(id, index))}
             key={id}
             onClick={() => handleAnswerClick({ id, text, correct })}
             style={{
-              background:
-                (userAnswer && timer === BLINK_DURATION) || timerIsOver ? getBc(id, correct) : '',
+              background: getBc(showAnswerBackground, id, correct, userAnswer?.id),
             }}
-            disabled={timer === BLINK_DURATION || !!userAnswer || timerIsOver}
+            disabled={answerDisabled}
           >
             {text} {correct ? 'correct' : ''}
           </button>
@@ -157,7 +133,7 @@ const QuestionComponent: FC = () => {
         mw={240}
         style={{ padding: 12 }}
         onClick={onNext}
-        disabled={timer !== BLINK_DURATION && !timerIsOver}
+        // disabled={timer !== BLINK_DURATION && !timerIsOver}
       >
         {end === 'none' ? 'Следующий вопрос' : 'Сыграть заново'}
       </Button>
